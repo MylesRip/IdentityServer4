@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Cryptography.X509Certificates;
 
 namespace IdentityServerAspNetIdentity
 {
@@ -37,6 +38,9 @@ namespace IdentityServerAspNetIdentity
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            var certificate = new X509Certificate2("localhostFromMyCAwithRootCA.pfx", "b2b2b2");
+
+
             var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -53,7 +57,8 @@ namespace IdentityServerAspNetIdentity
                 .AddAspNetIdentity<ApplicationUser>();
 
             // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+            //builder.AddDeveloperSigningCredential();
+            builder.AddSigningCredential(certificate);
 
             services.AddAuthentication()
                 .AddGoogle(options =>
