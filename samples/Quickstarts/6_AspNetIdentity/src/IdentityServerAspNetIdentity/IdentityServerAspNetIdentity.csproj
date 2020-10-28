@@ -1,15 +1,27 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="identityserver_testing.pfx" />
+    <None Remove="localhostFromMyCA.pfx" />
     <None Remove="localhostFromMyCAwithRootCA.pfx" />
+    <None Remove="localhostFromMyCAwithRootCA4.pfx" />
+    <None Remove="MyCA.pfx" />
+    <None Remove="MyRootCA.pfx" />
+    <None Remove="MySSLCert.pfx" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="identityserver_testing.pfx" />
+    <EmbeddedResource Include="localhostFromMyCA.pfx" />
     <EmbeddedResource Include="localhostFromMyCAwithRootCA.pfx" />
+    <EmbeddedResource Include="localhostFromMyCAwithRootCA4.pfx" />
+    <EmbeddedResource Include="MyCA.pfx" />
+    <EmbeddedResource Include="MyRootCA.pfx" />
+    <EmbeddedResource Include="MySSLCert.pfx" />
   </ItemGroup>
 
   <ItemGroup>

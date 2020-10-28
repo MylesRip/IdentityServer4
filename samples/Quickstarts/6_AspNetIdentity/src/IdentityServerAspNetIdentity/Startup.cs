@@ -38,7 +38,13 @@ namespace IdentityServerAspNetIdentity
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            var certificate = new X509Certificate2("localhostFromMyCAwithRootCA.pfx", "b2b2b2");
+            //var certificate = new X509Certificate2("localhostFromMyCAwithRootCA.pfx", "b2b2b2");
+            //var certificate = new X509Certificate2("localhostFromMyCA.pfx", "b2b2b2");
+            //var certificate = new X509Certificate2("MyRootCA.pfx", "b2b2b2");
+            //var certificate = new X509Certificate2("identityserver_testing.pfx", "password");     // works, but why? how was it created?
+            //var certificate = new X509Certificate2("MyCA.pfx", "passwordx");                      // works! created in PS
+            //var certificate = new X509Certificate2("localhostFromMyCAwithRootCA4.pfx", "b2b2b2");  // nope. created in OpenSSL
+            var certificate = new X509Certificate2("MySSLCert.pfx", "passwordx", X509KeyStorageFlags.UserKeySet);     // works, but only with the 3rd argument. Without it, you get an "access denied" error when executing this line. See https://github.com/Microsoft/dotnet-framework-early-access/issues/25#issuecomment-394419380                  // works! created in PS
 
 
             var builder = services.AddIdentityServer(options =>
@@ -59,6 +65,7 @@ namespace IdentityServerAspNetIdentity
             // not recommended for production - you need to store your key material somewhere secure
             //builder.AddDeveloperSigningCredential();
             builder.AddSigningCredential(certificate);
+            //builder.AddSigningCredential(certificate, "RS256");
 
             services.AddAuthentication()
                 .AddGoogle(options =>
